@@ -52,6 +52,7 @@ class Show extends PureComponent {
       image = this.state.data.image.medium;
 
     summary = summary.replace(/<[^>]+>/g, '');
+    genres = genres.join(', ');
 
     return (
       <div className="show">
