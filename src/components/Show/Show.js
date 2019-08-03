@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import './Show.css';
+import { getShowInfo } from '../../api.js';
 
 class Show extends PureComponent {
   constructor(props) {
@@ -17,28 +18,19 @@ class Show extends PureComponent {
 
     this.loadData = this.loadData.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.getShowInfo = getShowInfo.bind(this);
 
-    if (this.state.showId) this.loadData(this.map[this.state.showId]);
+    if (this.state.showId) this.loadData(this.state.showId);
   }
 
   loadData(showId) {
-    let req = new XMLHttpRequest();
-
-    req.open('GET', 'http://api.tvmaze.com/shows/' + showId, true);
-
-    req.onload = () => {
-      let result = JSON.parse(req.response);
+    getShowInfo(showId).then(result => {
       this.setState({ data: result, showId: showId });
-    };
-
-    req.send();
+    });
   }
   componentDidUpdate() {
-    if (
-      this.props.showId &&
-      this.map[this.props.showId] !== this.state.showId
-    ) {
-      this.loadData(this.map[this.props.showId]);
+    if (this.props.showId && this.props.showId !== this.state.showId) {
+      this.loadData(this.props.showId);
     }
   }
 
