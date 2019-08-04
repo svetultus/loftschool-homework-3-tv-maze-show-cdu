@@ -16,10 +16,6 @@ class Show extends PureComponent {
       bigBang: 66
     };
 
-    this.loadData = this.loadData.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.getShowInfo = getShowInfo.bind(this);
-
     if (this.state.showId) this.loadData(this.state.showId);
   }
 
@@ -39,9 +35,10 @@ class Show extends PureComponent {
       return false;
     }
 
-    let { name, genres } = this.state.data;
+    const { name } = this.state.data;
     let summary = this.state.data.summary,
-      image = this.state.data.image.medium;
+      image = this.state.data.image.medium,
+      genres = this.state.data.genres;
 
     summary = summary.replace(/<[^>]+>/g, '');
     genres = genres.join(', ');
